@@ -1,0 +1,174 @@
+mysql> Insert into worldcity(city,country,continent,latitude,northsouth,longitude,eastwest)values
+    -> ("atlanta","united states","north america",33.45,'N',84.23,'E'),
+    -> ("dallas","united states","north america",32.47,'N',96.47,'W'),
+    -> ("nashville","united state","north america",36.09,'N',86.46,'W'),
+    -> ("victoria","canada","north america",48.25,'N',12.21,'W'),
+    -> ("peterborough","canada","north america",44.18,'N',79.18,'W');
+Query OK, 5 rows affected (0.11 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>  Insert into worldcity(city,country,continent,latitude,northsouth,longitude,eastwest)values
+    -> ("Vancouver","Canada","North America",49.18,'N',23.04,'W'),
+    -> ("Toledo","United States","North America",41.39,'N',83.82,'W'),
+    -> ("Warsaw","Poland","Europe",52.15,'N',21.00,'E'),
+    -> ("Lima","Peru","South America",12.03,'S',77.03,'W'),
+    -> ("Rio De Janeiro","Brazil","South America",22.43,'S',43.13,'W'),
+    -> ("Santiago","Chile","South America",33.27,'S',70.40,'W'),
+    -> ("Bogota","Colombia","South America",04.36,'N',74.05,'W'),
+    -> ("Buenos Aires","Argentina","South America",34.36,'S',58.28,'W'),
+    -> ("Quito","Ecuador","South America",00.13,'S',78.30,'W'),
+    -> ("Caracas","Venezuela","South America",10.30,'N',66.56,'W'),
+    -> ("Madras","India","Asia",28.36,'N',77.12,'W'),
+    -> ("Bombay","India","Asia",18.58,'N',72.50,'E');
+Query OK, 12 rows affected (0.17 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql>  Insert into worldcity(city,country,continent,latitude,northsouth,longitude,eastwest)values
+    -> ("Moscow","Russia","Europe",55.45,'N',37.35,'E'),
+    -> ("Paris","France","Europe",48.52,'N',2.20,'E'),
+    -> ("Shenyang","China","Asia",41.48,'N',23.27,'E'),
+    -> ("Cairo","Egypt","Africa",30.03,'N',31.15,'E'),
+    -> ("Tripoli","Lybia","Africa",32.54,'N',13.11,'E'),
+    -> ("Beijing","China","Asia",39.56,'N',16.24,'E'),
+    -> ("Rome","Italy","Europe",41.54,'N',12.29,'E');
+Query OK, 7 rows affected (0.18 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql>  Insert into worldcity(city,country,continent,latitude,northsouth,longitude,eastwest)values
+    -> ("Tokyo","Japan","Asia",35.42,'N',39.46,'E'),
+    -> ("Sydney","Australia","Australia",33.52,'S',51.13,'E'),
+    -> ("Sparta","Greece","Europe",37.05,'N',22.27,'E'),
+    -> ("Madrid","Spain","Europe",40.24,'N',3.14,'W');
+Query OK, 4 rows affected (0.35 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select*from worldcity;
++----------------+---------------+---------------+----------+------------+-----------+----------+
+| city           | country       | continent     | latitude | northsouth | longitude | eastwest |
++----------------+---------------+---------------+----------+------------+-----------+----------+
+| athenas        | greece        | europe        |    37.59 | N          |     23.44 | E        |
+| atlanta        | united states | north america |    33.45 | N          |     84.23 | E        |
+| dallas         | united states | north america |    32.47 | N          |     96.47 | W        |
+| nashville      | united state  | north america |    36.09 | N          |     86.46 | W        |
+| victoria       | canada        | north america |    48.25 | N          |     12.21 | W        |
+| peterborough   | canada        | north america |    44.18 | N          |     79.18 | W        |
+| Vancouver      | Canada        | North America |    49.18 | N          |     23.04 | W        |
+| Toledo         | United States | North America |    41.39 | N          |     83.82 | W        |
+| Warsaw         | Poland        | Europe        |    52.15 | N          |     21.00 | E        |
+| Lima           | Peru          | South America |    12.03 | S          |     77.03 | W        |
+| Rio De Janeiro | Brazil        | South America |    22.43 | S          |     43.13 | W        |
+| Santiago       | Chile         | South America |    33.27 | S          |     70.40 | W        |
+| Bogota         | Colombia      | South America |     4.36 | N          |     74.05 | W        |
+| Buenos Aires   | Argentina     | South America |    34.36 | S          |     58.28 | W        |
+| Quito          | Ecuador       | South America |     0.13 | S          |     78.30 | W        |
+| Caracas        | Venezuela     | South America |    10.30 | N          |     66.56 | W        |
+| Madras         | India         | Asia          |    28.36 | N          |     77.12 | W        |
+| Bombay         | India         | Asia          |    18.58 | N          |     72.50 | E        |
+| Manchester     | England       | Europe        |    51.30 | N          |      0.00 | NULL     |
+| Moscow         | Russia        | Europe        |    55.45 | N          |     37.35 | E        |
+| Paris          | France        | Europe        |    48.52 | N          |      2.20 | E        |
+| Shenyang       | China         | Asia          |    41.48 | N          |     23.27 | E        |
+| Cairo          | Egypt         | Africa        |    30.03 | N          |     31.15 | E        |
+| Tripoli        | Lybia         | Africa        |    32.54 | N          |     13.11 | E        |
+| Beijing        | China         | Asia          |    39.56 | N          |     16.24 | E        |
+| Rome           | Italy         | Europe        |    41.54 | N          |     12.29 | E        |
+| Tokyo          | Japan         | Asia          |    35.42 | N          |     39.46 | E        |
+| Sydney         | Australia     | Australia     |    33.52 | S          |     51.13 | E        |
+| Sparta         | Greece        | Europe        |    37.05 | N          |     22.27 | E        |
+| Madrid         | Spain         | Europe        |    40.24 | N          |      3.14 | W        |
++----------------+---------------+---------------+----------+------------+-----------+----------+
+30 rows in set (0.05 sec)
+
+1)
+mysql> select distinct country,continent from worldcity;
++---------------+---------------+
+| country       | continent     |
++---------------+---------------+
+| greece        | europe        |
+| united states | north america |
+| united state  | north america |
+| canada        | north america |
+| Poland        | Europe        |
+| Peru          | South America |
+| Brazil        | South America |
+| Chile         | South America |
+| Colombia      | South America |
+| Argentina     | South America |
+| Ecuador       | South America |
+| Venezuela     | South America |
+| India         | Asia          |
+| England       | Europe        |
+| Russia        | Europe        |
+| France        | Europe        |
+| China         | Asia          |
+| Egypt         | Africa        |
+| Lybia         | Africa        |
+| Italy         | Europe        |
+| Japan         | Asia          |
+| Australia     | Australia     |
+| Spain         | Europe        |
++---------------+---------------+
+23 rows in set (0.15 sec)
+
+
+2)
+mysql> select city,country from worldcity
+    -> where
+    -> city like 'R%' or 'r%';
++----------------+---------+
+| city           | country |
++----------------+---------+
+| Rio De Janeiro | Brazil  |
+| Rome           | Italy   |
++----------------+---------+
+2 rows in set, 1 warning (0.35 sec)
+
+3)
+mysql> select city,country from worldcity
+    -> where
+    -> city like '%a';
++----------+---------------+
+| city     | country       |
++----------+---------------+
+| atlanta  | united states |
+| victoria | canada        |
+| Lima     | Peru          |
+| Bogota   | Colombia      |
+| Sparta   | Greece        |
++----------+---------------+
+5 rows in set (0.00 sec)
+
+4)
+mysql> select city from worldcity
+    -> where
+    -> city LIKE 'M%' AND char_length(city)<=6;
++--------+
+| city   |
++--------+
+| Madras |
+| Moscow |
+| Madrid |
++--------+
+3 rows in set (0.23 sec)
+
+5)
+mysql> select city from worldcity
+    -> where
+    -> city LIKE '_a%';
++------------+
+| city       |
++------------+
+| dallas     |
+| nashville  |
+| Vancouver  |
+| Warsaw     |
+| Santiago   |
+| Caracas    |
+| Madras     |
+| Manchester |
+| Paris      |
+| Cairo      |
+| Madrid     |
++------------+
+11 rows in set (0.00 sec)
+
