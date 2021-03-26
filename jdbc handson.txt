@@ -1,0 +1,383 @@
+PRODUCT PROGRAM:
+Example4.java
+package com.day15;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
+public class Example4 {
+	public static void main(String[] args){
+		Scanner s=new Scanner(System.in);
+		int choice;
+		do{
+			System.out.println("1.Insert product");
+			System.out.println("2.Update product");
+			System.out.println("3.Delete product");
+			System.out.println("4.Select product");
+			System.out.println("5.Exit");
+			System.out.println("Enter the choice:");
+			choice=Integer.parseInt(s.nextLine());
+			switch(choice){
+			case 1:
+				System.out.println("Enter productId:");
+				int id=Integer.parseInt(s.nextLine());
+				System.out.println("Enter ProductName:");
+				String name=s.nextLine();
+				System.out.println("Enter product quantity:");
+				int qty=Integer.parseInt(s.nextLine());
+				System.out.println("Enter the price:");
+				double price=Double.parseDouble(s.nextLine());
+				Connection con=null;
+				try{
+					con=ConnectionUtil.getConnection();
+					PreparedStatement ps=con.prepareStatement("insert into product values(?,?,?,?)");
+					ps.setInt(1, id);
+					ps.setString(2,name);
+					ps.setInt(3,qty);
+					ps.setDouble(4,price);
+					int rows=ps.executeUpdate();
+					if(rows==1)
+						System.out.println("Record inserted successfully");
+				}
+				catch(Exception e){
+					System.out.println(e);
+				}
+				finally{
+					if(con!=null)
+						try{
+							con.close();
+						}
+					catch(SQLException e){
+						e.printStackTrace();
+					}
+					
+				}
+				break;
+			case 2:
+				System.out.println("Enter productId:");
+				int pid=Integer.parseInt(s.nextLine());
+				System.out.println("Enter ProductName:");
+				String pname=s.nextLine();
+				System.out.println("Enter product quantity:");
+				int pqty=Integer.parseInt(s.nextLine());
+				System.out.println("Enter the price:");
+				double pprice=Double.parseDouble(s.nextLine());
+				Connection con1=null;
+				try{
+					con1=ConnectionUtil.getConnection();
+					PreparedStatement ps1=con1.prepareStatement
+							("update product set pname=?,qty=?,price=? where prodid=?");
+					ps1.setString(1,pname);
+					ps1.setInt(2,pqty);
+					ps1.setDouble(3,pprice);
+					ps1.setInt(4,pid);
+					int rows1=ps1.executeUpdate();
+					if(rows1==1){
+						System.out.println("Product record updated successfully");
+					}
+				}
+				catch(Exception e){
+					System.out.println(e);
+				}
+				finally{
+					if(con1!=null)
+						try{
+							con1.close();
+						}
+					catch(SQLException e){
+						e.printStackTrace();
+					}
+					
+				}
+				break;
+			case 3:
+				System.out.println("Enter Product id");
+	              int prod_id=Integer.parseInt(s.nextLine());
+	              Connection con2=null;
+	              try {
+	                 con2=ConnectionUtil.getConnection();
+	                 PreparedStatement ps2=con2.prepareStatement("delete from product where prodid=?");
+	                 ps2.setInt(1, prod_id);
+	                 int deletedRow=ps2.executeUpdate();
+	                 if(deletedRow==1)
+	                     System.out.println("Product Record deleted successfully");
+	              }
+	              catch(Exception e) {
+	            	  System.out.println(e);
+	              }
+	              finally {
+	                  if(con2!=null)
+	                    try {
+	                        con2.close();
+	                    } catch (SQLException e) {
+	                        e.printStackTrace();
+	                    }
+	              }
+				break;
+			case 4:
+				Connection con3=null;
+				try{
+					con3=ConnectionUtil.getConnection();
+					Statement st=con3.createStatement();
+					ResultSet rs=st.executeQuery("select * from product");
+					List<Product> p=new ArrayList<>();
+					while(rs.next()){
+						Product pd=new Product();
+						pd.setProdid(rs.getInt(1));
+						pd.setPname(rs.getString(2));
+						pd.setQty(rs.getInt(3));
+						pd.setPrice(rs.getDouble(4));
+						p.add(pd);
+						
+//						
+					}
+					System.out.printf("%15s %20s %5s %10s\n",
+							"ProductId","ProductName","Quantity","Price");
+					
+					for(Product p1:p){
+						System.out.printf("%15s %20s %5s %10s\n",
+								p1.getProdid(),p1.getPname(),p1.getQty(),p1.getPrice());
+					}
+					}
+					catch(Exception e){
+						System.out.println(e);
+					}
+				finally {
+	                  if(con3!=null)
+	                    try {
+	                        con3.close();
+	                    } catch (SQLException e) {
+	                        e.printStackTrace();
+	                    }
+	              }
+				break;
+			case 5:
+				System.exit(0);
+				break;
+			}
+		}
+		while(choice<=5);
+	}
+
+}
+
+
+Product.java
+package com.day15;
+
+public class Product {
+	private int prodid;
+	private String pname;
+	private int qty;
+	private double price;
+	/**
+	 * @return the prodid
+	 */
+	public int getProdid() {
+		return prodid;
+	}
+	/**
+	 * @param prodid the prodid to set
+	 */
+	public void setProdid(int prodid) {
+		this.prodid = prodid;
+	}
+	/**
+	 * @return the pname
+	 */
+	public String getPname() {
+		return pname;
+	}
+	/**
+	 * @param pname the pname to set
+	 */
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	/**
+	 * @return the qty
+	 */
+	public int getQty() {
+		return qty;
+	}
+	/**
+	 * @param qty the qty to set
+	 */
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+	/**
+	 * @return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+
+}
+
+OUTPUT:
+
+
+INSERT
+
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+Enter the choice:
+1
+Enter productId:
+1
+Enter ProductName:
+oreo
+Enter product quantity:
+2
+Enter the price:
+12.00
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+Record inserted successfully
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+Enter the choice:
+1
+Enter productId:
+2
+Enter ProductName:
+kitkat
+Enter product quantity:
+3
+Enter the price:
+10.00
+Record inserted successfully
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+Enter the choice:
+1
+Enter productId:
+3
+Enter ProductName:
+munch
+Enter product quantity:
+5
+Enter the price:
+20.00
+Record inserted successfully
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+Enter the choice:
+
+mysql> select*from product;
++--------+--------+------+-------+
+| prodid | pname  | qty  | price |
++--------+--------+------+-------+
+|      1 | oreo   |    2 | 12.00 |
+|      2 | kitkat |    3 | 10.00 |
+|      3 | munch  |    5 | 20.00 |
++--------+--------+------+-------+
+3 rows in set (0.20 sec)
+
+UPDATE:
+
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+Enter the choice:
+2
+Enter productId:
+2
+Enter ProductName:
+dairymilk
+Enter product quantity:
+6
+Enter the price:
+50.00
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+Product record updated successfully
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+
+mysql> SELECT*FROM PRODUCT;
++--------+-----------+------+-------+
+| prodid | pname     | qty  | price |
++--------+-----------+------+-------+
+|      1 | oreo      |    2 | 12.00 |
+|      2 | dairymilk |    6 | 50.00 |
+|      3 | munch     |    5 | 20.00 |
++--------+-----------+------+-------+
+3 rows in set (0.02 sec)
+
+
+DELETE:
+
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+Enter the choice:
+3
+Enter Product id
+3
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+Product Record deleted successfully
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+
+mysql> SELECT*FROM PRODUCT;
++--------+-----------+------+-------+
+| prodid | pname     | qty  | price |
++--------+-----------+------+-------+
+|      1 | oreo      |    2 | 12.00 |
+|      2 | dairymilk |    6 | 50.00 |
++--------+-----------+------+-------+
+2 rows in set (0.00 sec)
+
+SELECT:
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
+Enter the choice:
+4
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+      ProductId          ProductName Quantity      Price
+              1                 oreo     2       12.0
+              2            dairymilk     6       50.0
+1.Insert product
+2.Update product
+3.Delete product
+4.Select product
+5.Exit
